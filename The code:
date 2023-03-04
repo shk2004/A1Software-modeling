@@ -1,0 +1,73 @@
+from enum import Enum
+import datetime
+
+
+class Customer:
+    def __init__(self, name, last_name, number, nationality):
+        self.name = name
+        self.last_name = last_name
+        self.number = number
+        self.nationality = nationality
+        
+    def info(self):
+        print(f"Name: {self.name} {self.last_name}\nPhone number: {self.number}\nNationality: {self.nationality.name}")
+
+class Nationality(Enum):
+    Emirati = 1
+
+class Model(Enum):
+    _500c = 1
+    G_class  = 2
+    Taycan = 3
+
+class Make(Enum):
+    Fiat = 1
+    Mercedes = 2
+    Porsche  = 3
+
+class Service:
+    class Type(Enum):
+        oil_change = 1
+        oil_filter = 2
+        tire_change  = 3
+    
+    def __init__(self, service_type, cost, duration, mechanic):
+        self.service_type = service_type
+        self.cost = cost
+        self.duration = duration
+        self.mechanic = mechanic
+
+class Car:
+    def __init__(self, make, model, year, color, ID, service):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.ID = ID
+        self.service = service
+        
+    def print_info(self):
+        print(f"Make: {self.make.name}\nModel: {self.model.name}\nYear: {self.year}\nColor: {self.color}\nID: {self.ID}\nService: {self.service.service_type.name}")
+
+class Receipt:
+    def __init__(self, customer, car, service, total):
+        self.customer = customer
+        self.car = car
+        self.service = service
+        self.total = total
+    
+    def receipt_p(self):
+        print(f"Customer Name: {self.customer.name} {self.customer.last_name}")
+        print(f"Cell Phone Number: {self.customer.number}")
+        print(f"Date: {datetime.date.today()}")
+        print(f"Mechanic Name: {self.car.service.mechanic}")
+        print(f"Vehicle Type: {self.car.make.name} {self.car.model.name}")
+        print(f"Vehicle Color: {self.car.color}")
+
+customer = Customer("Shamma", "Alkindi", "0501234567", Nationality.Emirati)
+service = Service(Service.Type.oil_change, 100, 1, "Mohammed")
+car = Car(Make.Mercedes, Model.G_class, 2022, "White", "S 67982", service)
+total = service.cost
+receipt = Receipt(customer, car, service, total)
+
+receipt.receipt_p()
